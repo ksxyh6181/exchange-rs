@@ -1,0 +1,45 @@
+[workspace]
+members = [
+    "crates/lib/common",
+    "crates/bin/order-service",
+    "crates/bin/exchange-service",
+    "crates/bin/user-service",
+    "crates/bin/risk-service",
+]
+
+[workspace.package]
+authors = ["huang <ksxyh6181@gmail.com>"]
+edition = "2024"
+homepage = "https://github.com/ksxyh6181"
+license = "Apache-2.0"
+publish = false
+repository = ""
+version = "0.1.0"
+
+[workspace.dependencies]
+common = { path = "crates/lib/common" }
+salvo = { version = "0.77.0", features = [
+  "serve-static",
+  "oapi",
+  "logging",
+  "catch-panic",
+  "websocket",
+  "session",
+  "sse",
+  "cors"
+] }
+tokio = { version = "1.36.0", features = ["full"] }
+serde = { version = "1.0.196", features = ["derive"] }
+serde_json = "1.0.113"
+tracing = "0.1.40"
+thiserror = "2.0.12"
+async-trait = "0.1.77"
+log = "0.4.20"
+env_logger = "0.11.1"
+nacos-sdk = "0.4.3"
+config = "0.15.9"
+uuid = { version = "1.6.1", features = ["v4", "serde"] }
+toml = "0.8.20"
+chrono = "0.4.32"
+lazy_static = "1.4.0"
+anyhow = "1.0.97"

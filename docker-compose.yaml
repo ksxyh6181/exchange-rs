@@ -1,0 +1,80 @@
+services:
+  exchange-service:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+      target: exchange-service
+    container_name: exchange-service
+    restart: always
+    logging:
+      driver: json-file
+      options:
+        max-size: 500m
+    ports:
+      - "8091:8091"  
+    environment:
+      - NACOS_SERVER_ADDR=nacos:8848
+      - NACOS_NAMESPACE=${NACOS_NAMESPACE}
+      - NACOS_GROUP=${NACOS_GROUP}
+      - NACOS_USERNAME=${NACOS_USERNAME}
+      - NACOS_PASSWORD=${NACOS_PASSWORD}
+  order-service:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+      target: order-service
+    container_name: order-service
+    restart: always
+    logging:
+      driver: json-file
+      options:
+        max-size: 500m
+    ports:
+      - "8092:8092"
+    environment:
+      - NACOS_SERVER_ADDR=nacos:8848
+      - NACOS_NAMESPACE=${NACOS_NAMESPACE}
+      - NACOS_GROUP=${NACOS_GROUP}
+      - NACOS_USERNAME=${NACOS_USERNAME}
+      - NACOS_PASSWORD=${NACOS_PASSWORD}
+
+  user-service:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+      target: user-service
+    container_name: user-service
+    restart: always
+    logging:
+      driver: json-file
+      options:
+        max-size: 500m
+    ports:
+      - "8093:8093"
+    environment:
+      - NACOS_SERVER_ADDR=nacos:8848
+      - NACOS_NAMESPACE=${NACOS_NAMESPACE}
+      - NACOS_GROUP=${NACOS_GROUP}
+      - NACOS_USERNAME=${NACOS_USERNAME}
+      - NACOS_PASSWORD=${NACOS_PASSWORD}
+      
+  risk-service:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+      target: risk-service
+    container_name: risk-service
+    restart: always
+    logging:
+      driver: json-file
+      options:
+        max-size: 500m
+    ports:
+      - "8094:8094"
+    environment:
+      - NACOS_SERVER_ADDR=nacos:8848
+      - NACOS_NAMESPACE=${NACOS_NAMESPACE}
+      - NACOS_GROUP=${NACOS_GROUP}
+      - NACOS_USERNAME=${NACOS_USERNAME}
+      - NACOS_PASSWORD=${NACOS_PASSWORD}
+

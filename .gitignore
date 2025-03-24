@@ -1,0 +1,18 @@
+**target
+/data/log
+# /data/_web
+/data/_upload
+.idea
+*.http
+.git
+.vscode
+/tests
+.env
+fleet.toml
+/config/cert
+*.exe
+migration/data
+*.lock
+**pki
+**log
+**perf

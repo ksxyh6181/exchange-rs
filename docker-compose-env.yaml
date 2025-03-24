@@ -1,0 +1,58 @@
+services:
+  redis:
+    image: redis:latest
+    container_name: redis
+    command: redis-server --requirepass sbxz4014
+    #   #  两个写入操作 只是为了解决启动后警告 可以去掉
+    #    /bin/bash -c "echo 511 > /proc/sys/net/core/somaxconn
+    #    && echo never > /sys/kernel/mm/transparent_hugepage/enabled
+    #    && redis-server /usr/local/etc/redis/redis.conf"
+    ports:
+      # 使用宿主机的端口映射到容器的端口
+      # 宿主机：容器
+      - 6379:6379
+    environment:
+      TZ: Asia/Shanghai
+
+
+  postgres:
+    image: postgres:12-alpine
+    container_name: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: hl120425
+    ports:
+      - 5432:5432
+
+  kafka:
+    image: bitnami/kafka:latest
+    container_name: kafka
+    restart: always
+    ulimits:
+      nofile:
+        soft: 65536
+        hard: 65536
+    environment:
+      - TZ=Asia/Shanghai
+      - KAFKA_CFG_NODE_ID=0
+      - KAFKA_CFG_PROCESS_ROLES=controller,broker
+      - KAFKA_CFG_CONTROLLER_QUORUM_VOTERS=0@kafka:9093
+      - KAFKA_CFG_LISTENERS=PLAINTEXT://:9092,CONTROLLER://:9093,EXTERNAL://:9094
+      - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://kafka:9092,EXTERNAL://192.168.9.81:9094
+      - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT,EXTERNAL:PLAINTEXT
+      - KAFKA_CFG_CONTROLLER_LISTENER_NAMES=CONTROLLER
+    ports:
+      - '9092:9092'
+      - '9094:9094'
+
+  nacos:
+    image: qingpan/rnacos:stable
+    container_name: nacos
+    ports:
+      - "8848:8848"
+      - "9848:9848"
+      - "10848:10848"
+    volumes:
+      - /var/nacos/io:/io:rw
+    restart: always

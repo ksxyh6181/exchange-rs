@@ -1,0 +1,9 @@
+﻿[server]
+host = "127.0.0.1"
+port = 8081 # 不同项目给不同的地址
+
+[database]
+url = "postgres://localhost:5432/orderservice_db"
+username = "postgres"
+password = "postgres"
+
